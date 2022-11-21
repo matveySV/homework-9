@@ -1,4 +1,4 @@
-import java.util.Arrays;
+import java.util.Optional;
 
 public class MyStack implements Stackable {
 
@@ -6,8 +6,8 @@ public class MyStack implements Stackable {
     private int[] stackArray;
     private int top;
 
-    MyStack(int m) {
-        this.mSize = m;
+    MyStack(int capacity) {
+        this.mSize = capacity;
         stackArray = new int[mSize];
         top = -1;
     }
@@ -16,7 +16,7 @@ public class MyStack implements Stackable {
         return (top == -1);
     }
 
-    public int getTop(){
+    public int getTop() {
         return top;
     }
 
@@ -25,27 +25,26 @@ public class MyStack implements Stackable {
     }
 
 
-    public void putElementOnTheStack(int element) {
-        try {
-            stackArray[++top] = element;
-        } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("The Stack is over");
-        }
+    public void addElementOnTheStack(int element) {
+        if (isStackIsFull()) throw new isStackIsFullException("The Stack is full");
+        stackArray[++top] = element;
+    }
+
+    public int deleteElementOnTheStack() { //pop
+        if(isStackIsEmpty()) throw new isStackIsEmptyException("stack is empty");
+        return stackArray[top--];
 
     }
 
-    public int getElementOnTheStack() {
-        try {
-            return stackArray[top--];
-        } catch (ArrayIndexOutOfBoundsException e) {
-
-            System.out.println("stack is empty");
-            return top;
-        }
-    }
-
-    public int readElementOnTheTop() {
+    public int readElementOnTheTop() { //peek
         System.out.print("The last Element of Stack: " + stackArray[top]);
         return stackArray[top];
+    }
+
+    public Optional<Integer> optionalreadElementOnTheTop(){
+        if(isStackIsEmpty()){
+            return Optional.empty();
+        }
+        return Optional.of(stackArray[top]);
     }
 }

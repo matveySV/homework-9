@@ -1,7 +1,9 @@
+import java.util.Optional;
+
 public interface Stackable {
     boolean isStackIsEmpty();
     boolean isStackIsFull();
-    void putElementOnTheStack(int element);
-    int getElementOnTheStack();
-    int readElementOnTheTop();
+    void addElementOnTheStack(int element);
+    int deleteElementOnTheStack() throws isStackIsEmptyException;
+    Optional<Integer> optionalreadElementOnTheTop();
 }
